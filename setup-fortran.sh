@@ -434,6 +434,7 @@ install_intel_dmg()
   require_fetch
   $fetch $MACOS_BASEKIT_URL > m_BASEKit.dmg
   ls -lh
+  hdiutil verify m_BASEKit.dmg
   hdiutil attach m_BASEKit.dmg
   sudo /Volumes/"$(basename "$MACOS_BASEKIT_URL" .dmg)"/bootstrapper.app/Contents/MacOS/bootstrapper -s \
     --action install \
