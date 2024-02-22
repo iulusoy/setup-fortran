@@ -253,7 +253,7 @@ mkl_version_map_l()
   local mkl_version=$2
   case intel_version in
     2021.1.2)
-      version=2021.1.1
+      mkl_version=2021.1.1
       ;;
     *)
   esac
