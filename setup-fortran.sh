@@ -250,12 +250,14 @@ intel_version_map_l()
 mkl_version_map_l()
 {
   local intel_version=$1
-  local mkl_version=$2
   case intel_version in
-    2021.1.2)
+    2021.1 | 2021.1.2)
       mkl_version=2021.1.1
+      echo "set mkl version to $mkl_version"
       ;;
     *)
+      mkl_version=$intel_version
+      ;;
   esac
 }
 
