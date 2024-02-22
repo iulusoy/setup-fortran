@@ -250,10 +250,11 @@ intel_version_map_l()
 mkl_version_map_l()
 {
   local intel_version=$1
-  case intel_version in
+  echo "set mkl version to $mkl_version"
+  echo "intel version is $intel_version"
+  case $intel_version in
     2021.1 | 2021.1.2)
       mkl_version=2021.1.1
-      echo "set mkl version to $mkl_version"
       ;;
     *)
       mkl_version=$intel_version
@@ -342,10 +343,12 @@ install_intel_apt()
 {
   local version=$1
   local classic=$2
-  local mkl_version=$version
+  local mkl_version=$1
+  echo "MKL version is $mkl_version"
   intel_version_map_l $version $classic
   # assign corresponding mkl version
-  mkl_version_map_l $version $mkl_version
+  mkl_version_map_l $version
+  echo "MKL version is $mkl_version"
 
   require_fetch
   local _KEY="GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB"
