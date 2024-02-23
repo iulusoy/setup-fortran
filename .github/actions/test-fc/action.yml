@@ -70,7 +70,6 @@ runs:
           fi
         fi
 
-        source /opt/intel/oneapi/setvars.sh
         linking="-lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
 
         # hello world with blas call program
