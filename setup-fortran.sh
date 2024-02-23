@@ -458,7 +458,7 @@ install_intel_dmg()
       ;;
   esac
 
-  if install_mkl; then
+  if $install_mkl; then
     require_fetch
     $fetch $MACOS_BASEKIT_URL > m_BASEKit.dmg
     ls -lh
