@@ -296,6 +296,24 @@ intel_version_map_m()
   esac
 }
 
+mkl_version_map_m()
+{
+  local intel_version=$1
+  echo "set mkl version to $mkl_version"
+  echo "intel version is $intel_version"
+  case $intel_version in
+    2021.1.0 | 2021.2.0 | 2021.3.0 | 2021.4.0 | 2022.1.0 | 2022.2.0)
+      mkl_version=2022.2.0
+      ;;
+    2022.3.0 | 2022.3.1 | 2023.0.0 | 2023.1.0)
+      mkl_version=2023.1.0
+      ;;
+    *)
+      mkl_version=2023.2.0
+      ;;
+  esac
+}
+
 intel_version_map_w()
 {
   local actual_version=$1
@@ -346,7 +364,6 @@ install_intel_apt()
   local mkl_version=$1
   echo "MKL version is $mkl_version"
   intel_version_map_l $version $classic
-  # assign corresponding mkl version
   mkl_version_map_l $version
   echo "MKL version is $mkl_version"
 
@@ -379,27 +396,25 @@ install_intel_apt()
 install_intel_dmg()
 {
   local version=$1
+  local mkl_version=$1
+  local install_mkl=$2
   intel_version_map_m $version
+  mkl_version_map_m $version
 
   case $version in
     2021.1.0)
-      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/17426/m_BaseKit_p_2021.1.0.2427.dmg
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/17398/m_HPCKit_p_2021.1.0.2681.dmg
       ;;
     2021.2.0)
-      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/17714/m_BaseKit_p_2021.2.0.2855.dmg
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/17643/m_HPCKit_p_2021.2.0.2903.dmg
       ;;
     2021.3.0)
-      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/17969/m_BaseKit_p_2021.3.0.3043.dmg
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/17890/m_HPCKit_p_2021.3.0.3226.dmg
       ;;
     2021.4.0)
-      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/18256/m_BaseKit_p_2021.4.0.3384.dmg
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/18242/m_HPCKit_p_2021.4.0.3389.dmg
       ;;
     2022.1.0)
-      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/18342/m_BaseKit_p_2022.1.0.92.dmg
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/18341/m_HPCKit_p_2022.1.0.86.dmg
       ;;
     2022.2.0)
@@ -407,15 +422,12 @@ install_intel_dmg()
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/18681/m_HPCKit_p_2022.2.0.158_offline.dmg
       ;;
     2022.3.0)
-      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/18865/m_BaseKit_p_2022.3.0.8743.dmg
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/18866/m_HPCKit_p_2022.3.0.8685.dmg
       ;;
     2022.3.1)
-      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/18971/m_BaseKit_p_2022.3.1.17244.dmg
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/18977/m_HPCKit_p_2022.3.1.15344.dmg
       ;;
     2023.0.0)
-      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/19080/m_BaseKit_p_2023.0.0.25441.dmg
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/19086/m_HPCKit_p_2023.0.0.25440.dmg
       ;;
     2023.1.0)
@@ -431,18 +443,35 @@ install_intel_dmg()
       ;;
   esac
 
-  require_fetch
-  $fetch $MACOS_BASEKIT_URL > m_BASEKit.dmg
-  ls -lh
-  # hdiutil verify m_BASEKit.dmg
-  # hdiutil attach m_BASEKit.dmg
-  # sudo /Volumes/"$(basename "$MACOS_BASEKIT_URL" .dmg)"/bootstrapper.app/Contents/MacOS/bootstrapper -s \
-  #   --action install \
-  #   --eula=accept \
-  #   --continue-with-optional-error=yes \
-  #   --log-dir=.
-  # hdiutil detach /Volumes/"$(basename "$MACOS_BASEKIT_URL" .dmg)" -quiet
-  # rm m_BASEKit.dmg
+  case $mkl_version in
+    2022.2.0)
+      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/18675/m_BaseKit_p_2022.2.0.226_offline.dmg
+      ;;
+    2023.1.0)
+      MACOS_BASEKIT_URL=https:/registrationcenter-download.intel.com/akdlm/IRC_NAS/2516a0a0-de4d-4f3d-9e83-545b32127dbb/m_BaseKit_p_2023.1.0.45568.dmg
+      ;;
+    2023.2.0)
+      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/cd013e6c-49c4-488b-8b86-25df6693a9b7/m_BaseKit_p_2023.2.0.49398.dmg
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
+
+  if install_mkl; then
+    require_fetch
+    $fetch $MACOS_BASEKIT_URL > m_BASEKit.dmg
+    ls -lh
+    hdiutil verify m_BASEKit.dmg
+    hdiutil attach m_BASEKit.dmg
+    sudo /Volumes/"$(basename "$MACOS_BASEKIT_URL" .dmg)"/bootstrapper.app/Contents/MacOS/bootstrapper -s \
+      --action install \
+      --eula=accept \
+      --continue-with-optional-error=yes \
+      --log-dir=.
+    hdiutil detach /Volumes/"$(basename "$MACOS_BASEKIT_URL" .dmg)" -quiet
+    rm m_BASEKit.dmg
+  fi
 
   require_fetch
   $fetch $MACOS_HPCKIT_URL > m_HPCKit.dmg
@@ -524,12 +553,14 @@ install_intel()
 {
   local platform=$1
   local classic=$2
+  # local install_mkl=$3
+  local install_mkl=true
   case $platform in
     linux*)
       install_intel_apt $version $classic
       ;;
     darwin*)
-      install_intel_dmg $version
+      install_intel_dmg $version $install_mkl
       ;;
     mingw*)
       install_intel_win $version $classic
