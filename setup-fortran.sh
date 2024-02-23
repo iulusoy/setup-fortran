@@ -491,6 +491,7 @@ install_intel_dmg()
   export FC="ifort"
   export CC="icc"
   export CXX="icpc"
+  export MKLROOT=/opt/intel/oneapi/mkl/latest
   export DYLD_LIBRARY_PATH=$MKLROOT/lib:$DYLD_LIBRARY_PATH
 }
 
