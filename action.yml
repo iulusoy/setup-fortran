@@ -11,7 +11,7 @@ inputs:
   install_mkl:
     description: "If MKL should be installed along with the compiler"
     required: false
-    default: "false"
+    default: "true"
 outputs:
   fc:
     description: "Path to Fortran compiler"
