@@ -70,7 +70,7 @@ runs:
           fi
         fi
         
-        linking="-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -Wl,--no-relax" 
+        linking="-lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
 
         # hello world with blas call program
         ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
