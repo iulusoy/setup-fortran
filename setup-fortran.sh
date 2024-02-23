@@ -553,8 +553,7 @@ install_intel()
 {
   local platform=$1
   local classic=$2
-  # local install_mkl=$3
-  local install_mkl=true
+  local install_mkl=$3
   case $platform in
     linux*)
       install_intel_apt $version $classic

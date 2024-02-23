@@ -7,6 +7,10 @@ inputs:
   version:
     description: "Version of toolchain or compiler"
     required: true
+  install_mkl: 
+    description: "If MKL should be installed along with the compiler"
+    required: false
+    default: "false"
 runs:
   using: "composite"
   steps:
@@ -50,6 +54,30 @@ runs:
         [[ "$output" == *"hello world"* ]] && echo "$output" || (echo "Unexpected Fortran program 'hw' output: $output"; exit 1)
         rm hw
 
+    - name: Test compile and link mkl (bash)
+      if: ${{ inputs.install_mkl == 'true' }} 
+      working-directory: test
+      shell: bash
+      run: |
+        # macos-13/gfortran 7-9 compatibility workaround
+        args=""
+        if [ "$RUNNER_OS" == "macOS" ]; then
+          if [[ $(sw_vers -productVersion) == 13* ]] && \
+              [[ ${{ inputs.compiler }} == "gcc" ]] && \
+              [[ ${{ inputs.version }} =~ ^(7|8|9)$ ]]
+          then
+            args="-L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
+          fi
+        fi
+        
+        linking="-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -Wl,--no-relax" 
+
+        # hello world with blas call program
+        ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
+        output=$(./hw_mkl '2>&1')
+        [[ "$output" == *"hello world   9.00000000000000"* ]] && echo "$output" || (echo "Unexpected Fortran program 'hw_mkl' output: $output"; exit 1)
+        rm hw_mkl
+
     - name: Test compile Fortran (pwsh)
       working-directory: test
       if: ${{ (success() || failure()) && runner.os == 'Windows' }}
@@ -64,6 +92,22 @@ runs:
             exit 1
         }
         rm hw.exe
+
+    - name: Test compile Fortran (pwsh)
+      working-directory: test
+      if: ${{ (success() || failure()) && runner.os == 'Windows' }}
+      shell: pwsh
+      run: |
+        ${{ env.FC }} -o hw.exe hw.f90 
+        $output=$(& ".\hw.exe")
+        if ($output -match "hello world") {
+            write-output $output
+        } else {
+            write-output "unexpected output: $output"
+            exit 1
+        }
+        rm hw.exe
+
 
     - name: Test compile Fortran (powershell)
       working-directory: test
