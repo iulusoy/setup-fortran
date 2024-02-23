@@ -10,7 +10,7 @@ inputs:
   install_mkl: 
     description: "If MKL should be installed along with the compiler"
     required: false
-    default: "false"
+    default: "true"
 runs:
   using: "composite"
   steps:
