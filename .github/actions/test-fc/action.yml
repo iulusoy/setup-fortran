@@ -69,7 +69,8 @@ runs:
             args="-L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
           fi
         fi
-        
+
+        source /opt/intel/oneapi/setvars.sh
         linking="-lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
 
         # hello world with blas call program
