@@ -178,6 +178,7 @@ LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 LIBRARY_PATH=$LIBRARY_PATH
 INFOPATH=$INFOPATH
 MANPATH=$MANPATH
+MKLROOT=$MKLROOT
 ONEAPI_ROOT=$ONEAPI_ROOT
 CLASSPATH=$CLASSPATH
 CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH
@@ -381,7 +382,6 @@ install_intel_apt()
   fi
 
   source /opt/intel/oneapi/setvars.sh
-  export_intel_vars
 
   if $classic; then
     export FC="ifort"
@@ -394,8 +394,8 @@ install_intel_apt()
   fi
   if $install_mkl; then
     export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
-    echo "True: Exported MKLROOT $MKLROOT"
   fi
+  export_intel_vars
 }
 
 install_intel_dmg()
@@ -494,13 +494,14 @@ install_intel_dmg()
   rm m_HPCKit.dmg
 
   source /opt/intel/oneapi/setvars.sh
-  export_intel_vars
 
   export FC="ifort"
   export CC="icc"
   export CXX="icpc"
-  export MKLROOT="/opt/intel/oneapi/mkl/latest"
+  # export MKLROOT="/opt/intel/oneapi/mkl/latest"
+  export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
   export DYLD_LIBRARY_PATH="$MKLROOT/lib":"$MKLROOT":$DYLD_LIBRARY_PATH
+  export_intel_vars
 }
 
 install_intel_win()
