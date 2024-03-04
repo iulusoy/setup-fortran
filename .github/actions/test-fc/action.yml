@@ -70,7 +70,10 @@ runs:
           fi
         fi
 
-        linking="-I${{ env.MKLROOT }}/include -I${{ env.MKLROOT }}/lib -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
+        linking="-I${{ env.MKLROOT }}/include -L${{ env.MKLROOT }}/lib -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
+        ls $MKLROOT
+        ls $MKLROOT/lib
+        ls $MKLROOT/include
         echo "MKLROOT is ${{ env.MKLROOT }}"
         echo "compiler is ${{ env.FC }}"
         echo "compiler is $FC $MKLROOT"

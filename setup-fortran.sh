@@ -393,7 +393,9 @@ install_intel_apt()
     export CXX="icpx"
   fi
   if $install_mkl; then
-    export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
+  # reference oneapi_root?
+    export MKLROOT="$ONEAPI_ROOT/mkl/$mkl_version"
+    # export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
   fi
   export_intel_vars
 }
