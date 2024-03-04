@@ -74,6 +74,7 @@ runs:
         echo "MKLROOT is ${{ env.MKLROOT }}"
         echo "compiler is ${{ env.FC }}"
         echo "compiler is $FC $MKLROOT"
+        echo "linker is $linking"
         # hello world with blas call program
         ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
         output=$(./hw_mkl '2>&1')
