@@ -394,7 +394,7 @@ install_intel_apt()
   fi
   if $install_mkl; then
     export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
-    echo "Exported MKLROOT $MKLROOT"
+    echo "True: Exported MKLROOT $MKLROOT"
   fi
 }
 
@@ -500,7 +500,7 @@ install_intel_dmg()
   export CC="icc"
   export CXX="icpc"
   export MKLROOT="/opt/intel/oneapi/mkl/latest"
-  export DYLD_LIBRARY_PATH="$MKLROOT/lib":$DYLD_LIBRARY_PATH
+  export DYLD_LIBRARY_PATH="$MKLROOT/lib":"$MKLROOT":$DYLD_LIBRARY_PATH
 }
 
 install_intel_win()
