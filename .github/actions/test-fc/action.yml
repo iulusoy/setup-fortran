@@ -70,15 +70,17 @@ runs:
           fi
         fi
 
-        linking="-I${{ env.MKLROOT }}/include -L${{ env.MKLROOT }}/lib -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
+        linking="-L${{ env.MKLROOT }}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
         echo "ls oneapi"
         ls /opt/intel/oneapi/
+        echo "ls mkl"
+        ls /opt/intel/oneapi/mkl
         echo "ls MKLROOT"
         ls $MKLROOT
         echo "ls MKLROOT/lib"
         ls $MKLROOT/lib
-        echo "ls MKLROOT/include"
-        ls $MKLROOT/include
+        echo "ls MKLROOT/lib/intel64"
+        ls $MKLROOT/lib/intel64
         echo "MKLROOT is ${{ env.MKLROOT }}"
         echo "compiler is ${{ env.FC }}"
         echo "compiler is $FC $MKLROOT"
