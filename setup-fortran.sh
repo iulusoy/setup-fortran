@@ -502,7 +502,7 @@ install_intel_dmg()
   export CXX="icpc"
   # export MKLROOT="/opt/intel/oneapi/mkl/latest"
   export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
-  export DYLD_LIBRARY_PATH="$MKLROOT/lib":"$MKLROOT":$DYLD_LIBRARY_PATH
+  export DYLD_LIBRARY_PATH="$MKLROOT/lib/intel64":$DYLD_LIBRARY_PATH
   export_intel_vars
 }
 
