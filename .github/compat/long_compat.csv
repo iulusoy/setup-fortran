@@ -1,4 +1,2 @@
 runner,compiler,version,support
 ubuntu-20.04,intel-classic,2021.1.2,&check;
-ubuntu-20.04,intel,2021.1.2,&check;
-macos-11,intel-classic,2021.1,&check;

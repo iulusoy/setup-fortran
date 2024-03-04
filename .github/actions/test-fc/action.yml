@@ -71,7 +71,7 @@ runs:
         fi
 
         linking="-I${{ env.MKLROOT }}/include -L${{ env.MKLROOT }}/lib -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
-        ls /opt/intel/oneapi/mkl
+        ls /opt/intel/oneapi/
         ls $MKLROOT
         ls $MKLROOT/lib
         ls $MKLROOT/include
