@@ -59,7 +59,7 @@ runs:
       working-directory: test
       shell: bash
       run: |
-        echo "$install_mkl $compiler"
+        echo "${{ inputs.install_mkl }} ${{ inputs.compiler }}"
         # macos-13/gfortran 7-9 compatibility workaround
         args=""
         if [ "$RUNNER_OS" == "macOS" ]; then
