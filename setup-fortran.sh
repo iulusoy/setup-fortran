@@ -372,7 +372,7 @@ install_intel_apt()
     | sudo tee /etc/apt/sources.list.d/oneAPI.list
   sudo apt-get update
 
-  if install_mkl; then
+  if $install_mkl; then
     sudo apt-get install \
       intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version \
       intel-oneapi-mkl-$mkl_version
