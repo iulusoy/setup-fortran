@@ -179,13 +179,13 @@ LIBRARY_PATH=$LIBRARY_PATH
 INFOPATH=$INFOPATH
 MANPATH=$MANPATH
 ONEAPI_ROOT=$ONEAPI_ROOT
+MKLROOT=$MKLROOT
 CLASSPATH=$CLASSPATH
 CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH
 OCL_ICD_FILENAMES=$OCL_ICD_FILENAMES
 INTEL_PYTHONHOME=$INTEL_PYTHONHOME
 CPATH=$CPATH
 SETVARS_COMPLETED=$SETVARS_COMPLETED
-MKLROOT=$MKLROOT
 EOF
   for path in ${PATH//:/ }; do
     echo $path >> $GITHUB_PATH
@@ -251,8 +251,6 @@ intel_version_map_l()
 mkl_version_map_l()
 {
   local intel_version=$1
-  echo "set mkl version to $mkl_version"
-  echo "intel version is $intel_version"
   case $intel_version in
     2021.1 | 2021.1.2)
       mkl_version=2021.1.1
@@ -300,8 +298,6 @@ intel_version_map_m()
 mkl_version_map_m()
 {
   local intel_version=$1
-  echo "set mkl version to $mkl_version"
-  echo "intel version is $intel_version"
   case $intel_version in
     2021.1.0 | 2021.2.0 | 2021.3.0 | 2021.4.0 | 2022.1.0 | 2022.2.0)
       mkl_version=2022.2.0
@@ -365,6 +361,7 @@ install_intel_apt()
   local mkl_version=$1
   local install_mkl=$3
   intel_version_map_l $version $classic
+  mkl_version_map_l $version
 
   require_fetch
   local _KEY="GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB"
@@ -376,7 +373,6 @@ install_intel_apt()
   sudo apt-get update
 
   if install_mkl; then
-    mkl_version_map_l $version
     sudo apt-get install \
       intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version \
       intel-oneapi-mkl-$mkl_version
@@ -399,6 +395,7 @@ install_intel_apt()
   fi
   if install_mkl; then
     export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
+    echo "Exported MKLROOT $MKLROOT"
   fi
 }
 
@@ -408,6 +405,7 @@ install_intel_dmg()
   local mkl_version=$1
   local install_mkl=$2
   intel_version_map_m $version
+  mkl_version_map_m $version
 
   case $version in
     2021.1.0)
@@ -467,7 +465,6 @@ install_intel_dmg()
   esac
 
   if $install_mkl; then
-    mkl_version_map_m $version
     if [ "$MACOS_BASEKIT_URL" == "" ]; then
       "ERROR: MACOS_BASEKIT_URL is empty - please check the version mapping for MKL"
     fi
