@@ -173,7 +173,7 @@ install_gcc()
 
 export_intel_vars()
 {
-  echo "$GITUB_ENV"
+  echo "exporting MKL to GH env.. $MKLROOT"
   cat >> $GITHUB_ENV <<EOF
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 LIBRARY_PATH=$LIBRARY_PATH
@@ -188,7 +188,6 @@ INTEL_PYTHONHOME=$INTEL_PYTHONHOME
 CPATH=$CPATH
 SETVARS_COMPLETED=$SETVARS_COMPLETED
 EOF
-echo "$GITUB_ENV"
   for path in ${PATH//:/ }; do
     echo $path >> $GITHUB_PATH
   done
