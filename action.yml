@@ -139,6 +139,9 @@ runs:
           echo cc=$CC>>$GITHUB_OUTPUT
           echo cxx=$CXX>>$GITHUB_OUTPUT
         fi
+        if [[ "${{ inputs.install_mkl }}" == "true" ]]; then
+          echo MKLROOT=$MKLROOT>>$GITHUB_ENV
+        fi
 
         # intel oneapi flag to indicate env has been activated
         if [[ "${{ inputs.compiler }}" =~ "intel" ]]; then
