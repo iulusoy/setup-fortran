@@ -55,10 +55,11 @@ runs:
         rm hw
 
     - name: Test compile and link mkl (bash)
-      if: ${{ inputs.install_mkl == 'true' }} and ${{ inputs.compiler != 'gcc' }} and ${{ inputs.compiler != 'nvidia-hpc' }}
+      if: ${{ inputs.install_mkl == 'true' }} && ${{ inputs.compiler != 'gcc' }} && ${{ inputs.compiler != 'nvidia-hpc' }}
       working-directory: test
       shell: bash
       run: |
+        echo "$install_mkl $compiler"
         # macos-13/gfortran 7-9 compatibility workaround
         args=""
         if [ "$RUNNER_OS" == "macOS" ]; then
