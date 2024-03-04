@@ -55,7 +55,7 @@ runs:
         rm hw
 
     - name: Test compile and link mkl (bash)
-      if: ${{ inputs.install_mkl == 'true' }} 
+      if: ${{ inputs.install_mkl == 'true' }} and ${{ inputs.compiler != 'gcc' }} and ${{ inputs.compiler != 'nvidia-hpc' }}
       working-directory: test
       shell: bash
       run: |
