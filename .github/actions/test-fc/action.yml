@@ -70,8 +70,8 @@ runs:
           fi
         fi
 
-        linking="I$MKLROOT/include I$MKLROOT/lib -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
-
+        linking="I${{ env.MKLROOT }}/include I${{ env.MKLROOT }}/lib -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
+        echo "MKLROOT is ${{ env.MKLROOT }}"
         # hello world with blas call program
         ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
         output=$(./hw_mkl '2>&1')
