@@ -393,7 +393,7 @@ install_intel_apt()
     export CC="icx"
     export CXX="icpx"
   fi
-  if install_mkl; then
+  if $install_mkl; then
     export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
     echo "Exported MKLROOT $MKLROOT"
   fi
