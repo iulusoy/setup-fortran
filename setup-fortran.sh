@@ -173,6 +173,7 @@ install_gcc()
 
 export_intel_vars()
 {
+  echo "$GITUB_ENV"
   cat >> $GITHUB_ENV <<EOF
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 LIBRARY_PATH=$LIBRARY_PATH
@@ -187,6 +188,7 @@ INTEL_PYTHONHOME=$INTEL_PYTHONHOME
 CPATH=$CPATH
 SETVARS_COMPLETED=$SETVARS_COMPLETED
 EOF
+echo "$GITUB_ENV"
   for path in ${PATH//:/ }; do
     echo $path >> $GITHUB_PATH
   done
@@ -500,8 +502,8 @@ install_intel_dmg()
   export FC="ifort"
   export CC="icc"
   export CXX="icpc"
-  export MKLROOT=/opt/intel/oneapi/mkl/latest
-  export DYLD_LIBRARY_PATH=$MKLROOT/lib:$DYLD_LIBRARY_PATH
+  export MKLROOT="/opt/intel/oneapi/mkl/latest"
+  export DYLD_LIBRARY_PATH="$MKLROOT/lib":$DYLD_LIBRARY_PATH
 }
 
 install_intel_win()
