@@ -7,10 +7,6 @@ inputs:
   version:
     description: "Version of toolchain or compiler"
     required: true
-  install_mkl: 
-    description: "If MKL should be installed along with the compiler"
-    required: false
-    default: "true"
 runs:
   using: "composite"
   steps:
@@ -53,44 +49,6 @@ runs:
         output=$(./hw '2>&1')
         [[ "$output" == *"hello world"* ]] && echo "$output" || (echo "Unexpected Fortran program 'hw' output: $output"; exit 1)
         rm hw
-
-    - name: Test compile and link mkl (bash)
-      if: ${{ inputs.install_mkl == 'true' }} && ${{ inputs.compiler != 'gcc' }} && ${{ inputs.compiler != 'nvidia-hpc' }}
-      working-directory: test
-      shell: bash
-      run: |
-        echo "${{ inputs.install_mkl }} ${{ inputs.compiler }}"
-        # macos-13/gfortran 7-9 compatibility workaround
-        args=""
-        if [ "$RUNNER_OS" == "macOS" ]; then
-          if [[ $(sw_vers -productVersion) == 13* ]] && \
-              [[ ${{ inputs.compiler }} == "gcc" ]] && \
-              [[ ${{ inputs.version }} =~ ^(7|8|9)$ ]]
-          then
-            args="-L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
-          fi
-        fi
-
-        linking="-L${{ env.MKLROOT }}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
-        echo "ls oneapi"
-        ls /opt/intel/oneapi/
-        echo "ls mkl"
-        ls /opt/intel/oneapi/mkl
-        echo "ls MKLROOT"
-        ls $MKLROOT
-        echo "ls MKLROOT/lib"
-        ls $MKLROOT/lib
-        echo "ls MKLROOT/lib/intel64"
-        ls $MKLROOT/lib/intel64
-        echo "MKLROOT is ${{ env.MKLROOT }}"
-        echo "compiler is ${{ env.FC }}"
-        echo "compiler is $FC $MKLROOT"
-        echo "linker is $linking"
-        # hello world with blas call program
-        ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
-        output=$(./hw_mkl '2>&1')
-        [[ "$output" == *"hello world   9.00000000000000"* ]] && echo "$output" || (echo "Unexpected Fortran program 'hw_mkl' output: $output"; exit 1)
-        rm hw_mkl
 
     - name: Test compile Fortran (pwsh)
       working-directory: test
