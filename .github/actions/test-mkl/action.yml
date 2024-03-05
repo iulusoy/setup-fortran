@@ -19,24 +19,26 @@ runs:
       working-directory: test
       shell: bash
       run: |
-        echo "${{ inputs.install_mkl }} ${{ inputs.compiler }}"
-        # macos-13/gfortran 7-9 compatibility workaround
-        args=""
-        if [ "$RUNNER_OS" == "macOS" ]; then
-          if [[ $(sw_vers -productVersion) == 13* ]] && \
-              [[ ${{ inputs.compiler }} == "gcc" ]] && \
-              [[ ${{ inputs.version }} =~ ^(7|8|9)$ ]]
-          then
-            args="-L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
-          fi
+        if ([[ "${{ inputs.compiler }}" =~ "intel" ]] ); then
+         echo "${{ inputs.install_mkl }} ${{ inputs.compiler }}"
+         # macos-13/gfortran 7-9 compatibility workaround
+         args=""
+         if [ "$RUNNER_OS" == "macOS" ]; then
+           if [[ $(sw_vers -productVersion) == 13* ]] && \
+               [[ ${{ inputs.compiler }} == "gcc" ]] && \
+               [[ ${{ inputs.version }} =~ ^(7|8|9)$ ]]
+           then
+             args="-L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
+           fi
+         fi
+ 
+         linking="-L${{ env.MKLROOT }}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
+         echo "MKLROOT is ${{ env.MKLROOT }}"
+         echo "compiler is ${{ env.FC }}"
+         echo "linker is $linking"
+         # hello world with blas call program
+         ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
+         output=$(./hw_mkl '2>&1')
+         [[ "$output" == *"hello world   9.00000000000000"* ]] && echo "$output" || (echo "Unexpected Fortran program 'hw_mkl' output: $output"; exit 1)
+         rm hw_mkl
         fi
-
-        linking="-L${{ env.MKLROOT }}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
-        echo "MKLROOT is ${{ env.MKLROOT }}"
-        echo "compiler is ${{ env.FC }}"
-        echo "linker is $linking"
-        # hello world with blas call program
-        ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
-        output=$(./hw_mkl '2>&1')
-        [[ "$output" == *"hello world   9.00000000000000"* ]] && echo "$output" || (echo "Unexpected Fortran program 'hw_mkl' output: $output"; exit 1)
-        rm hw_mkl
