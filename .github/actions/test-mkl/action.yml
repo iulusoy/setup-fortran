@@ -19,6 +19,9 @@ runs:
       shell: bash
       run: |
         if [[ "${{ inputs.compiler }}" =~ "intel" ]]; then
+         if [ "$RUNNER_OS" == "macOS" ]; then
+           export DYLD_LIBRARY_PATH="${{ env.MKLLIB }}:$DYLD_LIBRARY_PATH"
+         fi
          echo "$DYLD_LIBRARY_PATH"
          echo "$MKLLIB"
          linking="-L${{ env.MKLLIB }} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
