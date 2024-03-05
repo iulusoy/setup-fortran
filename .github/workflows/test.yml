@@ -80,7 +80,7 @@ jobs:
           version: ${{ matrix.toolchain.version }}
       
       - name: Test MKL libraries
-        if: steps.setup-fortran.outcome == 'success' && ${{ runner.os }} != 'windows'
+        if: steps.setup-fortran.outcome == 'success' && runner.os != 'windows'
         uses: ./.github/actions/test-mkl
         with:
           compiler: ${{ matrix.toolchain.compiler }}
