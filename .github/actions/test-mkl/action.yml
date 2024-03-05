@@ -30,9 +30,9 @@ runs:
            fi
          fi
  
-         linking="-L${{ env.MKLROOT }}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
-         echo "MKLROOT is ${{ env.MKLROOT }}"
-         ls ${{ env.MKLROOT }}
+         linking="-L${{ env.MKLLIB }} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
+         echo "MKLLIB is ${{ env.MKLLIB }}"
+         ls ${{ env.MKLLIB }}
          echo "compiler is ${{ env.FC }}"
          echo "linker is $linking"
          # hello world with blas call program

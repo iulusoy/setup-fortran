@@ -178,7 +178,7 @@ LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 LIBRARY_PATH=$LIBRARY_PATH
 INFOPATH=$INFOPATH
 MANPATH=$MANPATH
-MKLROOT=$MKLROOT
+MKLLIB=$MKLLIB
 ONEAPI_ROOT=$ONEAPI_ROOT
 CLASSPATH=$CLASSPATH
 CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH
@@ -394,7 +394,7 @@ install_intel_apt()
   fi
   if $install_mkl; then
   # reference oneapi_root?
-    export MKLROOT="$ONEAPI_ROOT/mkl/latest"
+    export MKLLIB="$ONEAPI_ROOT/mkl/latest/lib/intel64"
     # export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
   fi
   export_intel_vars
@@ -500,8 +500,8 @@ install_intel_dmg()
   export FC="ifort"
   export CC="icc"
   export CXX="icpc"
-  export MKLROOT="$ONEAPI_ROOT/mkl/latest"
-  export DYLD_LIBRARY_PATH="$MKLROOT/lib/":$DYLD_LIBRARY_PATH
+  export MKLLIB="$ONEAPI_ROOT/mkl/latest/lib"
+  export DYLD_LIBRARY_PATH="$MKLLIB":$DYLD_LIBRARY_PATH
   export_intel_vars
 }
 
