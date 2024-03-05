@@ -18,8 +18,8 @@ runs:
       working-directory: test
       shell: bash
       run: |
-        if ([ "${{ inputs.compiler }}" == "intel" ] || [ "${{ inputs.compiler }}" == "intel-classic" ]); then
-         echo "${{ inputs.install_mkl }} ${{ inputs.compiler }}"
+      echo "${{ inputs.compiler }}"
+        if [[ "${{ inputs.compiler }}" =~ "intel" ]]; then
          # macos-13/gfortran 7-9 compatibility workaround
          args=""
          if [ "$RUNNER_OS" == "macOS" ]; then
