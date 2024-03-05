@@ -6,7 +6,7 @@ inputs:
     required: true
   version:
     description: "Version of toolchain or compiler"
-    required: false
+    required: true
   install_mkl: 
     description: "If MKL should be installed along with the compiler"
     required: false

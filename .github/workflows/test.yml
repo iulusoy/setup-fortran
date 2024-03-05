@@ -84,6 +84,7 @@ jobs:
         uses: ./.github/actions/test-mkl
         with:
           compiler: ${{ matrix.toolchain.compiler }}
+          version: ${{ matrix.toolchain.version }}
           install_mkl: true
 
       - name: Test C compiler
