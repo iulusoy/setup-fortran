@@ -80,6 +80,13 @@ jobs:
           version: ${{ matrix.toolchain.version }}
           install_mkl: true
       
+      - name: Test MKL libraries
+        if: steps.setup-fortran.outcome == 'success'
+        uses: ./.github/actions/test-mkl
+        with:
+          compiler: ${{ matrix.toolchain.compiler }}
+          install_mkl: true
+
       - name: Test C compiler
         continue-on-error: true
         if: needs.options.outputs.mode == 'report' && steps.setup-fortran.outcome == 'success'
