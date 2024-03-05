@@ -31,8 +31,6 @@ runs:
          fi
  
          linking="-L${{ env.MKLLIB }} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
-         echo "MKLLIB is ${{ env.MKLLIB }}"
-         echo "dyld is ${{ env.DYLD_LIBRARY_PATH }}"
          # hello world with blas call program
          ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
          output=$(./hw_mkl '2>&1')
