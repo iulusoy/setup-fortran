@@ -24,6 +24,10 @@ runs:
          fi
          echo "$DYLD_LIBRARY_PATH"
          echo "$MKLLIB"
+         # check mkl version
+         mkl_versions=$(ls $ONEAPI_ROOT/mkl)
+         echo "mkl version is $mkl_versions"
+         mkl_version = $(ldd ${{ env.FC }} | grep mkl)
          linking="-L${{ env.MKLLIB }} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
          # hello world with blas call program
          ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
