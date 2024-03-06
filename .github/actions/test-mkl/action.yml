@@ -18,7 +18,7 @@ runs:
       working-directory: test
       shell: bash
       run: |
-        if [[ "${{ inputs.compiler }}" =~ "intel" ]]; then
+        if [[ "${{ inputs.compiler }}" =~ "intel" ]] && [[ "${{ inputs.install_mkl }}" == "true" ]]; then
          if [ "$RUNNER_OS" == "macOS" ]; then
            export DYLD_LIBRARY_PATH="${{ env.MKLLIB }}:$DYLD_LIBRARY_PATH"
          fi
