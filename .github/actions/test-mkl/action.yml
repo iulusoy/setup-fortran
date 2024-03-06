@@ -19,9 +19,9 @@ runs:
       shell: bash
       run: |
         if [[ "${{ inputs.compiler }}" =~ "intel" ]] && [[ "${{ inputs.install_mkl }}" == "true" ]]; then
-         if [ "$RUNNER_OS" == "macOS" ]; then
-           export DYLD_LIBRARY_PATH="${{ env.MKLLIB }}:$DYLD_LIBRARY_PATH"
-         fi
+        #  if [ "$RUNNER_OS" == "macOS" ]; then
+          #  export DYLD_LIBRARY_PATH="${{ env.MKLLIB }}:$DYLD_LIBRARY_PATH"
+        #  fi
          echo "$DYLD_LIBRARY_PATH"
          echo "$MKLLIB"
          # check mkl version
