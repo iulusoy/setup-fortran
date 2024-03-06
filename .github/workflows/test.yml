@@ -85,7 +85,7 @@ jobs:
         with:
           compiler: ${{ matrix.toolchain.compiler }}
           version: ${{ matrix.toolchain.version }}
-          install_mkl: true
+          install_mkl: false
 
       - name: Test C compiler
         continue-on-error: true
