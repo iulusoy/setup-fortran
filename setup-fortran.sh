@@ -394,9 +394,7 @@ install_intel_apt()
     export CXX="icpx"
   fi
   if $install_mkl; then
-  # reference oneapi_root?
     export MKLLIB="$ONEAPI_ROOT/mkl/latest/lib/intel64"
-    # export MKLROOT="/opt/intel/oneapi/mkl/$mkl_version"
   fi
   export_intel_vars
 }
@@ -566,7 +564,7 @@ install_intel()
 {
   local platform=$1
   local classic=$2
-  local install_mkl=false
+  local install_mkl=$3
   case $platform in
     linux*)
       install_intel_apt $version $classic $install_mkl

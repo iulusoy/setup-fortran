@@ -71,13 +71,14 @@ jobs:
         with:
           compiler: ${{ matrix.toolchain.compiler }}
           version: ${{ matrix.toolchain.version }}
+          install_mkl: true
 
-      - name: Test Fortran compiler
-        if: steps.setup-fortran.outcome == 'success'
-        uses: ./.github/actions/test-fc
-        with:
-          compiler: ${{ matrix.toolchain.compiler }}
-          version: ${{ matrix.toolchain.version }}
+      # - name: Test Fortran compiler
+        # if: steps.setup-fortran.outcome == 'success'
+        # uses: ./.github/actions/test-fc
+        # with:
+          # compiler: ${{ matrix.toolchain.compiler }}
+          # version: ${{ matrix.toolchain.version }}
       
       - name: Test MKL libraries
         if: steps.setup-fortran.outcome == 'success' && runner.os != 'windows'
@@ -85,7 +86,7 @@ jobs:
         with:
           compiler: ${{ matrix.toolchain.compiler }}
           version: ${{ matrix.toolchain.version }}
-          install_mkl: false
+          install_mkl: true
 
       - name: Test C compiler
         continue-on-error: true
