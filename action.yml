@@ -11,7 +11,7 @@ inputs:
   install_mkl:
     description: "If MKL should be installed along with the compiler"
     required: false
-    default: "true"
+    default: "false"
 outputs:
   fc:
     description: "Path to Fortran compiler"
@@ -69,11 +69,11 @@ runs:
             ;;
           intel-classic)
             version=${VERSION:-2023.2.0}
-            install_intel $platform true $install_mkl
+            install_intel $platform true ${{ inputs.install_mkl }}
             ;;
           intel)
             version=${VERSION:-2023.2.0}
-            install_intel $platform false $install_mkl
+            install_intel $platform false ${{ inputs.install_mkl }}
             ;;
           nvidia-hpc)
             version=${VERSION:-23.11}

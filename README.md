@@ -114,7 +114,7 @@ Toolchain support varies across GitHub-hosted runner images.
 
 **Note:** Intel's `ifx` compiler is not supported on macOS, so the `intel` option redirects to `intel-classic` (`ifort`).
 
-**Note:** MKL libraries can only be installed for the Intel Fortran compiler, and only on linux and MacOS operating systems.
+**Note:** MKL libraries can only be installed for the Intel Fortran compiler, and only on linux and MacOS operating systems; with the exception of intel-classic 2021.5, for which no compatible library is available.
 
 ## License
 

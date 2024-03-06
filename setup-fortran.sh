@@ -501,8 +501,12 @@ install_intel_dmg()
   export FC="ifort"
   export CC="icc"
   export CXX="icpc"
-  export MKLLIB="$ONEAPI_ROOT/mkl/latest/lib"
-  export DYLD_LIBRARY_PATH="$MKLLIB":$DYLD_LIBRARY_PATH
+
+  if $install_mkl; then
+    export MKLLIB="$ONEAPI_ROOT/mkl/latest/lib"
+    export DYLD_LIBRARY_PATH="$MKLLIB":$DYLD_LIBRARY_PATH
+  fi
+
   export_intel_vars
 }
 
