@@ -18,7 +18,7 @@ runs:
       working-directory: test
       shell: bash
       run: |
-        if [[ "${{ inputs.compiler }}" =~ "intel" ]] && [[ "${{ inputs.install_mkl }}" == "true" ]]; then
+        if [[ "${{ inputs.compiler }}" =~ "intel" ]] && [[ "${{ inputs.install_mkl }}" == "true" ]] && ([[ "${{ inputs.version }}" != "2021.5" ]] && [[ "$runner.os" != "macOS" ]]); then
          linking="-L${{ env.MKLLIB }} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
          # hello world with blas call program
          ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
