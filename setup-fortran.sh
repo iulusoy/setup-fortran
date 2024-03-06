@@ -459,6 +459,8 @@ install_intel_dmg()
     2023.2.0)
       MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/cd013e6c-49c4-488b-8b86-25df6693a9b7/m_BaseKit_p_2023.2.0.49398.dmg
       ;;
+    "")
+      ;;
     *)
       exit 1
       ;;
