@@ -19,6 +19,9 @@ runs:
       shell: bash
       run: |
         if [[ "${{ inputs.compiler }}" =~ "intel" ]] && [[ "${{ inputs.install_mkl }}" == "true" ]] && ([[ "${{ inputs.version }}" != "2021.5" ]] && [[ "$runner.os" != "macOS" ]]); then
+         if [ "$RUNNER_OS" == "macOS" ]; then
+           export DYLD_LIBRARY_PATH="${{ env.MKLLIB }}:$DYLD_LIBRARY_PATH"
+         fi
          linking="-L${{ env.MKLLIB }} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
          # hello world with blas call program
          ${{ env.FC }} $args $linking -o hw_mkl hw_mkl.f90
