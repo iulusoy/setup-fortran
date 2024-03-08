@@ -389,7 +389,7 @@ install_intel_apt()
       intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version
   fi
 
-  source /opt/intel/oneapi/setvars.sh
+  # source /opt/intel/oneapi/setvars.sh
 
   if $classic; then
     export FC="ifort"
@@ -502,7 +502,7 @@ install_intel_dmg()
   hdiutil detach /Volumes/"$(basename "$MACOS_HPCKIT_URL" .dmg)" -quiet
   rm m_HPCKit.dmg
 
-  source /opt/intel/oneapi/setvars.sh
+  # source /opt/intel/oneapi/setvars.sh
 
   export FC="ifort"
   export CC="icc"
