@@ -380,10 +380,12 @@ install_intel_apt()
   # c/cpp compiler package names changed with 2024+
   case $version in
     2024*)
-      compiler_package_name=$(intel-oneapi-compiler-{fortran,dpcpp-cpp}-$version)
+      compiler_package_name=intel-oneapi-compiler-{fortran,dpcpp-cpp}-$version
+      echo $compiler_package_name
       ;;
     *)
-      compiler_package_name=$(intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version)
+      compiler_package_name=intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version
+      echo $compiler_package_name
       ;;
   esac
 
