@@ -688,7 +688,6 @@ install_nvidiahpc()
       exit 1
       ;;
   esac
-}
 
   export FC="nvfortran"
   export CC="nvc"
