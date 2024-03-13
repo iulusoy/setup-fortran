@@ -380,22 +380,20 @@ install_intel_apt()
   # c/cpp compiler package names changed with 2024+
   case $version in
     2024*)
-      compiler_package_name=intel-oneapi-compiler-{fortran,dpcpp-cpp}-$version
-      echo $compiler_package_name
+      cppname=dpcpp-cpp
       ;;
     *)
-      compiler_package_name=intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version
-      echo $compiler_package_name
+      cppname=dpcpp-cpp-and-cpp-classic
       ;;
   esac
 
   if $install_mkl; then
     sudo apt-get install \
-      $compiler_package_name \
+      intel-oneapi-compiler-{fortran,"$cpp_name"}-$version \
       intel-oneapi-mkl-$mkl_version
   else
     sudo apt-get install \
-      $compiler_package_name
+      intel-oneapi-compiler-{fortran,"$cpp_name"}-$version 
   fi
 
   source /opt/intel/oneapi/setvars.sh
