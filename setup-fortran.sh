@@ -380,10 +380,10 @@ install_intel_apt()
   # c/cpp compiler package names changed with 2024+
   case $version in
     2024*)
-      cppname=dpcpp-cpp
+      cpp_name=dpcpp-cpp
       ;;
     *)
-      cppname=dpcpp-cpp-and-cpp-classic
+      cpp_name=dpcpp-cpp-and-cpp-classic
       ;;
   esac
 
