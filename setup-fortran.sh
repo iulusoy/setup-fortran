@@ -295,20 +295,39 @@ intel_version_map_m()
 mkl_version_map_m()
 {
   local intel_version=$1
-  case $intel_version in
-    2021.1.0 | 2021.2.0 | 2021.3.0 | 2021.4.0 | 2022.2.0 | 2022.3.0 | 2022.3.1 | 2023.0.0 )
-      mkl_version=2022.2.0
-      ;;
-    2022.1.0)
-      mkl_version=""
-      ;;
-    2023.1.0)
-      mkl_version=2023.1.0
-      ;;
-    *)
-      mkl_version=2023.2.0
-      ;;
-  esac
+  macos_version=$(sw_vers | grep "ProductVersion")
+  echo "Found macos version $macos_version"
+  if [[ "$macos_version" == *"14"* ]]; then
+    echo "MacOS 14 requires different basekit versions to work"
+    case $intel_version in 
+      # compiler versions 2021.1, 2021.2, 2021.3, 2021.4, 2021.10 work with latest basekit
+      2021.1.0 | 2021.2.0 | 2021.3.0 | 2021.4.0 | 2023.2.0)
+        mkl_version=2023.2.0
+        ;;
+      # compiler versions 2021.5, 2021.6, 2021.7, 2021.7.1, 2021.8, 2021.9 work with other basekits
+      2023.1.0)
+        mkl_version=2022.2.0
+        ;;
+      *)
+        mkl_version=""
+        ;;
+    esac
+  else   
+    case $intel_version in
+      2021.1.0 | 2021.2.0 | 2021.3.0 | 2021.4.0 | 2022.2.0 | 2022.3.0 | 2022.3.1 | 2023.0.0 )
+        mkl_version=2022.2.0
+        ;;
+      2022.1.0)
+        mkl_version=""
+        ;;
+      2023.1.0)
+        mkl_version=2023.1.0
+        ;;
+      *)
+        mkl_version=2023.2.0
+        ;;
+    esac
+  fi
 }
 
 intel_version_map_w()
@@ -444,14 +463,6 @@ install_intel_dmg()
       exit 1
       ;;
   esac
-
-  # for mac-os 14, use only the latest basekit
-  macos_version = $(sw_vers)
-  echo "Found macos version $macos_version"
-  if [[ $macos_version == *"14"* ]]; then
-    echo "setting latest basekit for macos 14"
-    mkl_version="2023.2.0"
-  fi
 
   case $mkl_version in
     2022.2.0)
