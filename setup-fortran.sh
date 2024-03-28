@@ -445,6 +445,14 @@ install_intel_dmg()
       ;;
   esac
 
+  # for mac-os 14, use only the latest basekit
+  macos_version = $(sw_vers)
+  echo "Found macos version $macos_version"
+  if [[ $macos_version == *"14"* ]]; then
+    echo "setting latest basekit for macos 14"
+    mkl_version="2023.2.0"
+  fi
+
   case $mkl_version in
     2022.2.0)
       MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/18675/m_BaseKit_p_2022.2.0.226_offline.dmg
