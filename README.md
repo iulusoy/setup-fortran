@@ -119,7 +119,9 @@ Toolchain support varies across GitHub-hosted runner images.
 <!-- compat ends -->
 
 **Note:** Intel's `ifx` compiler is not supported on macOS, so the `intel` option redirects to `intel-classic` (`ifort`).
+
 **Note:** LFortran is currently only discoverable by name with `bash` on Windows, see [here for context](https://github.com/fortran-lang/setup-fortran/pull/57#issuecomment-2021605094).
+
 **Note:** MKL libraries can only be installed for the Intel Fortran compiler, and only on linux and MacOS operating systems; with the exception of intel-classic 2021.5, for which no compatible library is available.
 
 ## License
