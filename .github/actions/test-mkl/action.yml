@@ -24,6 +24,8 @@ runs:
         mkl_tests=true
         echo "$RUNNER_OS"
         if [[ "${{ inputs.compiler }}" =~ "gcc" ]]; then mkl_tests=false; fi
+        if [[ "${{ inputs.compiler }}" =~ "lfortran" ]]; then mkl_tests=false; fi
+        if [[ "${{ inputs.compiler }}" =~ "nvidia" ]]; then mkl_tests=false; fi
         if [[ "${{ inputs.install_mkl }}" == "false" ]]; then mkl_tests=false; fi
         if [[ "${{ inputs.version }}" == "2021.5" ]] && [[ "$RUNNER_OS" == "macOS" ]]; then mkl_tests=false; fi
         if [[ "$RUNNER_OS" == "macOS" ]]; then
