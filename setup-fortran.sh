@@ -401,11 +401,11 @@ install_intel_apt()
   case $version in
     2024*)
       sudo apt-get install \
-        intel-oneapi-compiler-{fortran,dpcpp-cpp}-$version intel-oneapi-mkl-$version
+        intel-oneapi-compiler-{fortran,dpcpp-cpp}-$version
       ;;
     *)
       sudo apt-get install \
-        intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version intel-oneapi-mkl-$version
+        intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version
       ;;
   esac
   if $install_mkl; then
@@ -468,7 +468,7 @@ install_intel_dmg()
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/irc_nas/19086/m_HPCKit_p_2023.0.0.25440.dmg
       ;;
     2023.1.0)
-      MACOS_HPCKIT_URL=https:/registrationcenter-download.intel.com/akdlm/IRC_NAS/a99cb1c5-5af6-4824-9811-ae172d24e594/m_HPCKit_p_2023.1.0.44543.dmg
+      MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/a99cb1c5-5af6-4824-9811-ae172d24e594/m_HPCKit_p_2023.1.0.44543.dmg
       ;;
     2023.2.0)
       MACOS_HPCKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/edb4dc2f-266f-47f2-8d56-21bc7764e119/m_HPCKit_p_2023.2.0.49443.dmg
@@ -483,7 +483,7 @@ install_intel_dmg()
       MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/18675/m_BaseKit_p_2022.2.0.226_offline.dmg
       ;;
     2023.1.0)
-      MACOS_BASEKIT_URL=https:/registrationcenter-download.intel.com/akdlm/IRC_NAS/2516a0a0-de4d-4f3d-9e83-545b32127dbb/m_BaseKit_p_2023.1.0.45568.dmg
+      MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/2516a0a0-de4d-4f3d-9e83-545b32127dbb/m_BaseKit_p_2023.1.0.45568.dmg
       ;;
     2023.2.0)
       MACOS_BASEKIT_URL=https://registrationcenter-download.intel.com/akdlm/IRC_NAS/cd013e6c-49c4-488b-8b86-25df6693a9b7/m_BaseKit_p_2023.2.0.49398.dmg
