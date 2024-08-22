@@ -413,21 +413,6 @@ install_intel_apt()
   fi
 
   source /opt/intel/oneapi/setvars.sh
-
-  if $classic; then
-    export FC="ifort"
-    export CC="icc"
-    export CXX="icpc"
-  else
-    export FC="ifx"
-    export CC="icx"
-    export CXX="icpx"
-  fi
-  if $install_mkl; then
-    export MKLLIB="$ONEAPI_ROOT/mkl/latest/lib/intel64"
-    export MKLROOT="$ONEAPI_ROOT/mkl/latest"
-  fi
-
   export_intel_vars
 }
 
