@@ -408,9 +408,13 @@ install_intel_apt()
         intel-oneapi-compiler-{fortran,dpcpp-cpp-and-cpp-classic}-$version
       ;;
   esac
+  cat /opt/intel/oneapi/setvars.sh
   if $install_mkl; then
+      echo "Installing Intel oneAPI MKL $mkl_version..."
       sudo apt-get install intel-oneapi-mkl-$mkl_version
   fi
+  cat /opt/intel/oneapi/setvars.sh
+
 
   source /opt/intel/oneapi/setvars.sh
   export_intel_vars
